@@ -15,17 +15,34 @@ const Button = styled.button`
   color: ${color};
   font-size: 2rem;
   boarder: none;
-  background: ${({ type }) => (type === 'cancel' ? 'tomato': 'indigo')};
+  background: indigo;
 `;
+
+const CancelButton = styled(Button)`
+background: tomato;
+`;
+
 
 const AppWrapper = styled.div`
   header{
     background: teal;
-    &: hover {
-      background: green;
-    }
+  }
+
+  ${Button}{
+    margin-bottom: 2rem;
   }
 `
+const Fake = ({className}) => (
+  <div className={className}>
+    <h2>I'm a fake component!!</h2>
+  </div>
+);
+
+const DoubleFake = styled(Fake)`
+  h2{
+    color: red;
+  }
+`;
 
 function App() {
   return (
@@ -35,8 +52,9 @@ function App() {
         <Heading>
           Edit <code>src/App.js</code> and save to reload.
         </Heading>
-          <Button type="save">Save</Button>
-          <Button type="cancel">Cancel</Button>
+        <DoubleFake/>
+          <Button>Save</Button>
+          <CancelButton>Cancel</CancelButton>
         <Heading>
           Heading2
         </Heading>
