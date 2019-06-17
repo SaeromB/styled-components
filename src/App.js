@@ -3,9 +3,16 @@ import logo from './logo.svg';
 import styled from 'styled-components';
 import './App.css';
 
-const Heading = styled.h1`
+const Heading = styled.h1 `
   font-size: 2rem;
-
+`;
+const Button = styled.button`
+  padding: 5px 10px;
+  boarder-radious: 4px;
+  color: white;
+  font-size: 2rem;
+  boarder: none;
+  background: ${({ type }) => (type === 'cancel' ? 'tomato': 'indigo')};
 `;
 
 function App() {
@@ -16,6 +23,9 @@ function App() {
         <Heading>
           Edit <code>src/App.js</code> and save to reload.
         </Heading>
+          <Button type="save">Save</Button>
+          <Button type="cancel">Cancel</Button>
+
         <Heading>
           Heading2
         </Heading>
