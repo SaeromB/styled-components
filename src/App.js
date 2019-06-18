@@ -1,74 +1,116 @@
-import React from 'react';
+import React, { Component } from 'react';
+import styled, { css } from 'styled-components';
 import logo from './logo.svg';
-import styled from 'styled-components';
 import './App.css';
 
-const Heading = styled.h1 `
+const size = {
+  small: 400,
+  med: 960,
+  large: 1140
+};
+
+const above = Object.keys(size).reduce((acc, label) => {
+  acc[label] = (...args) => css`
+    @media (min-width: ${size[label] / 16}em) {
+      ${css(...args)}
+    }
+  `;
+  return acc;
+}, {});
+
+const below = Object.keys(size).reduce((acc, label) => {
+  acc[label] = (...args) => css`
+    @media (max-width: ${size[label] / 16}em) {
+      ${css(...args)}
+    }
+  `;
+  return acc;
+}, {});
+
+const Fake = ({ className }) => (
+  <div className={className}>
+    <h2>I'm a fake component</h2>
+  </div>
+);
+
+// CSS Helper
+// Needed for props in mixins
+const fixedTop = css`
+  position: fixed;
+  top: ${({ top }) => top + 'px'};
+  left: 0;
+`;
+
+// const fixedTop = `
+//   position: fixed;
+//   top: ${({ top }) => top + 'px'};
+//   left: 0;
+// `;
+
+const Heading = styled.h1`
   font-size: 2rem;
+  ${above.med`
+    color: blue;
+  `}
 `;
 
 const color = 'white';
 
 const Button = styled.button`
-  padding: 5px 10px;
-  boarder-radious: 4px;
+  padding: 5px 20px;
+  border-radius: 4px;
   color: ${color};
   font-size: 2rem;
-  boarder: none;
+  border: none;
   background: indigo;
 `;
 
 const CancelButton = styled(Button)`
-background: tomato;
+  background: tomato;
+  ${fixedTop};
 `;
 
-
 const AppWrapper = styled.div`
-  header{
+  header {
     background: teal;
   }
-
-  ${Button}{
+  ${Button} {
     margin-bottom: 2rem;
   }
-`
-const Fake = ({className}) => (
-  <div className={className}>
-    <h2>I'm a fake component!!</h2>
-  </div>
-);
+`;
 
 const DoubleFake = styled(Fake)`
-  h2{
+  h2 {
     color: red;
   }
 `;
 
-function App() {
-  return (
-    <AppWrapper>
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Heading>
-          Edit <code>src/App.js</code> and save to reload.
-        </Heading>
-        <DoubleFake/>
+class App extends Component {
+  render() {
+    return (
+      <AppWrapper>
+        <header className="App-header">
+          <img src={logo} className="App-logo" alt="logo" />
+          <Heading>
+            Edit <code>src/App.js</code> and save to reload.
+          </Heading>
+          <DoubleFake />
+          <Fake />
           <Button>Save</Button>
-          <CancelButton>Cancel</CancelButton>
-        <Heading>
-          Heading2
-        </Heading>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </AppWrapper>
-  );
+          <CancelButton top="100">Cancel</CancelButton>
+          <Heading>Heading two</Heading>
+          <a
+            className="App-link"
+            href="https://reactjs.org"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Learn React
+          </a>
+        </header>
+      </AppWrapper>
+    );
+  }
 }
 
 export default App;
